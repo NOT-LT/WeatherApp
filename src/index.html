@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App Made by Taha Aljamri</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style2.css">
+</head>
+<body class=" bg-white dark:bg-neutral-900 flex flex-col items-center py-10 ">
+
+  <header class="flex flex-col w-11/12 justify-center items-center mb-5">
+    <!--the container of the search box & suggestionbox -->>
+    <div class="relative w-9/12 md:w-6/12 flex flex-col justify-center items-center">
+      <!--search box container-->
+      <div class="flex flex-row w-full overflow-ellipsis whitespace-nowrap items-center justify-center dark:bg-neutral-800 dark:border-none dark:text-slate-300 rounded-lg border-2 border-gray-300">
+        <button onclick="getWeatherData()" type="submit" class="ml-3 flex h-full justify-center items-center">
+          <svg class="text-gray-600 dark:text-slate-200 h-4 w-4 fill-current active:fill-slate-500" xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px"
+            viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 56.966 56.966;" xml:space="preserve"
+            width="512px" height="512px">
+            <path
+              d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
+          </svg>
+        </button>
+        
+        <input id="location" class="flex-grow flex-shrink w-full h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none dark:bg-neutral-800 dark:border-none text-gray-600 dark:text-slate-200 bg-white"
+          name="search" placeholder="Search for a city...">  
+      </div>
+
+      <!-- suggestion box -->
+      <ul id="searchResult" class="bg-white border border-gray-100 w-full mt-2 rounded-lg dark:bg-zinc-800 dark:text-white hidden">
+      </ul>
+    </div>
+    
+  </header>
+  
+  
+  <div id="container" class="w-full bg-curren flex flex-col items-center justify-center dark:bg-neutral-900 px-6 py-8 ">  
+    <!-- location display -->
+    <h1 id="location-display" class="text-5xl text-center text-black dark:text-white mt-3">City, Country</h1>
+    <!-- date display -->
+    <h3 id="date-time" class="text-lg text-center text-black dark:text-white mt-3">Monday, February 5, 2024 at 11:41 AM</h3>
+    <!-- weather description display -->
+    <div class="w-auto flex flex-row text-lg text-center  mt-3 text-black bg-neutral-300  dark:text-white dark:bg-zinc-800 rounded-full py-1 px-3">
+      <h3 id="weather-description" >Cloudy</h3>
+      <img id="weather-descrption-img" width="30px" src="https://openweathermap.org/img/wn/04d@2x.png" alt="weather description image">
+    </div>
+
+    <!-- weather info container -->
+    <div id="weather-info" class="w-full text-black bg-white dark:text-white mt-3 dark:bg-neutral-900 rounded-lg p-4">
+      <h3 id="temp" class="text-center text-4xl text-black dark:text-white mt-3">10° C</h3>
+      <p id="min-max-temp" class="text-center text-sm mt-1 text-black dark:text-neutral-300">MIN: 10°C MAX: 12°C</p>
+
+      <div id="weather-details" class="grid grid-cols-2 w-full p-3 mt-6 gap-2 justify-center">
+        <!-- feels like container -->
+        <div class="place-self-end w-full max-w-md rounded-lg py-3 px-3 flex flex-row items-center justify-start text-black bg-neutral-300 dark:bg-zinc-800 dark:text-white">
+          <svg width="20px" class="mr-4 fill-neutral-800 stroke-neutral-800 dark:fill-neutral-100 dark:stroke-neutral-100" style="display:inline;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M176 322.9V112c0-8.75-7.25-16-16-16s-16 7.25-16 16v210.9c-18.62 6.625-32 24.25-32 45.13c0 26.5 21.5 48 48 48s48-21.5 48-48C208 347.1 194.6 329.5 176 322.9zM272 278.5V112c0-61.87-50.12-112-111.1-112S48 50.13 48 112v166.5c-19.75 24.75-32 55.5-32 89.5c0 79.5 64.5 143.1 144 143.1S304 447.5 304 368C304 334 291.8 303.1 272 278.5zM160 448c-44.13 0-80-35.87-80-79.1c0-25.5 12.25-48.88 32-63.75v-192.3c0-26.5 21.5-48 48-48s48 21.5 48 48v192.3c19.75 14.75 32 38.25 32 63.75C240 412.1 204.1 448 160 448z"></path></svg>
+          <div class="flex flex-col">
+            <span >Feels like</span>
+            <span id="feels-like">9°</span>
+          </div>
+        </div>
+        <!-- pressure data container -->
+        <div class="place-self-start w-full max-w-md rounded-lg py-3 px-3 flex flex-row items-center justify-start text-black bg-neutral-300 dark:bg-zinc-800 dark:text-white">
+            <svg width="25px" class="mr-4 fill-neutral-800 stroke-neutral-800 dark:fill-neutral-100 dark:stroke-neutral-100" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 425 511.47"><path d="M359.22 243.18c-14.17 68.04-74.47 119.16-146.72 119.16S79.95 311.22 65.78 243.18h71.04c3.36 14.31 10.67 27.09 20.71 37.13 14.06 14.07 33.5 22.78 54.98 22.78 19.69 0 37.76-7.45 51.55-19.72 1.18-.94 2.32-1.96 3.42-3.06 10.04-10.04 17.35-22.82 20.71-37.13h71.03zM72.05 451.71h114.72v-28.32c-48.39-5.84-91.78-27.94-124.52-60.69C23.78 324.24 0 271.11 0 212.43c0-58.67 23.78-111.79 62.25-150.25 13.22-13.22 28.07-25.25 44.33-34.9 61.89-36.73 152.54-36.41 213.96 1.23 15.44 9.46 29.58 21.02 42.22 33.67C401.22 100.64 425 153.76 425 212.44c0 58.67-23.78 111.8-62.24 150.26-32.75 32.75-76.14 54.85-124.54 60.69v28.32h114.72c19.82 0 36.02 16.27 36.02 36.02v23.74H36.03v-23.74c0-19.82 16.21-36.02 36.02-36.02zM212.5 32.3c99.51 0 180.17 80.66 180.17 180.17 0 99.5-80.66 180.17-180.17 180.17-99.51 0-180.17-80.67-180.17-180.17 0-99.51 80.66-180.17 180.17-180.17zm-85.79 56.85c-2.96-5.12-1.22-11.67 3.89-14.64 5.12-2.96 11.67-1.21 14.63 3.9l13.39 23.18c2.96 5.11 1.22 11.67-3.9 14.63-5.11 2.96-11.67 1.22-14.63-3.89l-13.38-23.18zm-49.87 60.26c-5.11-2.93-6.88-9.47-3.94-14.59 2.93-5.11 9.47-6.87 14.58-3.94l23.18 13.38c5.11 2.93 6.88 9.47 3.94 14.59-2.93 5.11-9.47 6.87-14.58 3.94l-23.18-13.38zm260.68-24.57c5.11-2.93 11.65-1.17 14.58 3.94 2.94 5.12 1.17 11.66-3.94 14.59l-23.18 13.38c-5.11 2.93-11.65 1.17-14.58-3.94-2.94-5.12-1.17-11.66 3.94-14.59l23.18-13.38zm-60.31-49.87c2.93-5.11 9.47-6.87 14.58-3.94 5.12 2.93 6.88 9.47 3.95 14.59l-13.38 23.17c-2.94 5.11-9.47 6.88-14.59 3.94-5.11-2.93-6.87-9.47-3.94-14.58l13.38-23.18zm-77.18-13.1c0-5.92 4.8-10.73 10.72-10.73 5.93 0 10.73 4.81 10.73 10.73v26.77c0 5.92-4.8 10.73-10.73 10.73-5.92 0-10.72-4.81-10.72-10.73V61.87zm29.55 131.72c11.28 6.08 18.96 18.02 18.96 31.75 0 19.9-16.13 36.03-36.03 36.03-19.9 0-36.04-16.13-36.04-36.03 0-13.73 7.68-25.67 18.98-31.75v-56.57l17.06-17.06 17.07 17.06v56.57z"/></svg>          <div class="flex flex-col">
+            <span >Pressure</span>
+            <span id="pressure">1017 hPa</span>
+          </div>
+        </div>
+        <!-- Humidity data container -->
+        <div class="place-self-end w-full max-w-md rounded-lg py-3 px-3 flex flex-row items-center justify-start text-black bg-neutral-300 dark:bg-zinc-800 dark:text-white">
+          <svg width="30px" height="30px" class="mr-4 stroke-neutral-800  dark:stroke-neutral-100-800 dark:fill-neutral-100 dark:stroke-neutral-100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1" viewBox="0 0 328.611 328.611" xml:space="preserve">
+            <g>
+              <path d="M209.306,50.798c-2.452-3.337-7.147-4.055-10.485-1.602c-3.338,2.453-4.055,7.147-1.603,10.485   c54.576,74.266,66.032,123.541,66.032,151.8c0,27.691-8.272,52.794-23.293,70.685c-17.519,20.866-42.972,31.446-75.651,31.446   c-73.031,0-98.944-55.018-98.944-102.131c0-52.227,28.103-103.234,51.679-136.829c25.858-36.847,52.11-61.415,52.37-61.657   c3.035-2.819,3.209-7.565,0.39-10.6c-2.819-3.034-7.565-3.209-10.599-0.39c-1.11,1.031-27.497,25.698-54.254,63.765   c-24.901,35.428-54.586,89.465-54.586,145.71c0,31.062,9.673,59.599,27.236,80.353c20.361,24.061,50.345,36.779,86.708,36.779   c36.794,0,66.926-12.726,87.139-36.801c17.286-20.588,26.806-49.117,26.806-80.33C278.25,156.216,240.758,93.597,209.306,50.798z"/>
+              <path d="M198.43,148.146l-95.162,95.162c-2.929,2.929-2.929,7.678,0,10.606c1.465,1.464,3.385,2.197,5.304,2.197   s3.839-0.732,5.304-2.197l95.162-95.162c2.929-2.929,2.929-7.678,0-10.606C206.107,145.217,201.359,145.217,198.43,148.146z"/>
+              <path d="M191.965,207.899c-13.292,0-24.106,10.814-24.106,24.106s10.814,24.106,24.106,24.106s24.106-10.814,24.106-24.106   S205.257,207.899,191.965,207.899z M191.965,241.111c-5.021,0-9.106-4.085-9.106-9.106s4.085-9.106,9.106-9.106   s9.106,4.085,9.106,9.106S196.986,241.111,191.965,241.111z"/>
+              <path d="M125.178,194.162c13.292,0,24.106-10.814,24.106-24.106s-10.814-24.106-24.106-24.106s-24.106,10.814-24.106,24.106   S111.886,194.162,125.178,194.162z M125.178,160.949c5.021,0,9.106,4.085,9.106,9.106s-4.085,9.106-9.106,9.106   c-5.021,0-9.106-4.085-9.106-9.106S120.156,160.949,125.178,160.949z"/>
+            </g>
+          </svg>          
+          <div class="flex flex-col">
+            <span>Humidity</span>
+            <span id="humidity">80%</span>
+          </div>
+        </div>
+        <!-- wind data container -->
+        <div class="place-self-start w-full max-w-md rounded-lg py-3 px-3 flex flex-row items-center justify-start text-black bg-neutral-300 dark:bg-zinc-800 dark:text-white">
+          <svg width="30px" class="mr-3 fill-neutral-800 stroke-neutral-800 dark:fill-neutral-100 dark:stroke-neutral-100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 122.88 74.78" style="enable-background:new 0 0 122.88 74.78" xml:space="preserve"><g><path d="M28.69,53.38c-1.61,0-2.91-1.3-2.91-2.91c0-1.61,1.3-2.91,2.91-2.91h51.37c0.21,0,0.42,0.02,0.62,0.07 c1.84,0.28,3.56,0.8,5.1,1.63c1.7,0.92,3.15,2.19,4.27,3.89c3.85,5.83,3.28,11.24,0.56,15.24c-1.77,2.61-4.47,4.55-7.45,5.57 c-3,1.03-6.32,1.13-9.32,0.03c-4.54-1.66-8.22-5.89-8.76-13.55c-0.11-1.6,1.1-2.98,2.7-3.09c1.6-0.11,2.98,1.1,3.09,2.7 c0.35,4.94,2.41,7.56,4.94,8.48c1.71,0.62,3.67,0.54,5.48-0.08c1.84-0.63,3.48-1.79,4.52-3.32c1.49-2.19,1.71-5.28-0.61-8.79 c-0.57-0.86-1.31-1.51-2.18-1.98c-0.91-0.49-1.97-0.81-3.13-0.99H28.69L28.69,53.38z M15.41,27.21c-1.61,0-2.91-1.3-2.91-2.91 c0-1.61,1.3-2.91,2.91-2.91h51.21c1.17-0.18,2.23-0.5,3.14-0.99c0.87-0.47,1.61-1.12,2.18-1.98c2.32-3.51,2.09-6.6,0.61-8.79 c-1.04-1.53-2.68-2.69-4.52-3.32c-1.81-0.62-3.78-0.7-5.48-0.08c-2.52,0.92-4.59,3.54-4.94,8.48c-0.11,1.6-1.49,2.81-3.09,2.7 c-1.6-0.11-2.81-1.49-2.7-3.09c0.54-7.66,4.22-11.89,8.76-13.55c3-1.09,6.32-0.99,9.32,0.03c2.98,1.02,5.68,2.97,7.45,5.57 c2.72,4,3.29,9.41-0.56,15.24c-1.12,1.7-2.57,2.97-4.27,3.89c-1.54,0.83-3.26,1.35-5.1,1.63c-0.2,0.04-0.41,0.07-0.62,0.07H15.41 L15.41,27.21z M2.91,40.3C1.3,40.3,0,38.99,0,37.39c0-1.61,1.3-2.91,2.91-2.91h107.07c1.17-0.18,2.23-0.5,3.13-0.99 c0.87-0.47,1.61-1.12,2.18-1.98c2.32-3.51,2.09-6.6,0.61-8.79c-1.04-1.53-2.68-2.69-4.52-3.32c-1.81-0.62-3.78-0.7-5.48-0.08 c-2.52,0.92-4.59,3.54-4.94,8.48c-0.11,1.6-1.49,2.81-3.09,2.7c-1.6-0.11-2.81-1.49-2.7-3.09c0.54-7.66,4.22-11.89,8.76-13.55 c3-1.09,6.32-0.99,9.32,0.03c2.98,1.02,5.68,2.97,7.45,5.57c2.72,4,3.29,9.41-0.56,15.24c-1.12,1.7-2.57,2.97-4.27,3.89 c-1.54,0.83-3.26,1.35-5.1,1.63c-0.2,0.04-0.41,0.07-0.62,0.07H2.91L2.91,40.3z"/></g></svg>           
+          <div class="flex flex-col">
+            <span class="whitespace-nowrap">Wind Speed</span>
+            <span id="wind-speed">2.79m/s</span>
+          </div>
+        </div>
+
+    </div>
+
+   
+  </div>
+  <!-- dark mode toggler button -->
+  <button id="darkToggler">
+  </button>
+ 
+  <script type="module" src="app.js"></script>
+</body>
+</html>
